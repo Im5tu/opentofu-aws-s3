@@ -1,1 +1,9 @@
-# TODO: Add your module outputs here
+output "arn" {
+  description = "The ARN of the bucket"
+  value       = aws_s3_bucket.this.arn
+}
+
+output "name" {
+  description = "The name of the bucket"
+  value       = aws_s3_bucket.this.bucket
+}
