@@ -1,16 +1,41 @@
-# OpenTofu AWS Module Template
+# OpenTofu AWS S3 Module
 
-Template repository for creating OpenTofu AWS modules.
+A module for creating S3 buckets with server-side encryption, optional logging, versioning, and lifecycle policies.
 
 ## Usage
 
-```hcl
-module "example" {
-  source = "git::https://github.com/im5tu/opentofu-aws-<name>.git?ref=main"
+### Basic Usage
 
-  tags = {
-    Environment = "production"
-  }
+```hcl
+module "bucket" {
+  source = "git::https://github.com/im5tu/opentofu-aws-s3.git?ref=main"
+
+  name = "my-application-bucket"
+}
+```
+
+### With KMS Encryption
+
+```hcl
+module "bucket" {
+  source = "git::https://github.com/im5tu/opentofu-aws-s3.git?ref=main"
+
+  name              = "my-encrypted-bucket"
+  kms_master_key_id = aws_kms_key.bucket_key.arn
+  enable_versioning = true
+}
+```
+
+### With Access Logging
+
+```hcl
+module "bucket" {
+  source = "git::https://github.com/im5tu/opentofu-aws-s3.git?ref=main"
+
+  name                  = "my-logged-bucket"
+  enable_logging        = true
+  logging_target_bucket = "my-logging-bucket"
+  logging_target_prefix = "s3-access-logs/"
 }
 ```
 
@@ -25,12 +50,22 @@ module "example" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| tags | Tags to apply to resources | `map(string)` | `{}` | no |
+| name | The name of the S3 bucket | `string` | n/a | yes |
+| bucket_acl | The ACL for the bucket | `string` | `"private"` | no |
+| bucket_policy | The policy that will be applied to the bucket | `string` | `null` | no |
+| enable_versioning | Whether or not to enable versioning on bucket contents | `bool` | `false` | no |
+| enable_lifecycle_policy | Whether or not to enable lifecycle on bucket contents | `bool` | `true` | no |
+| kms_master_key_id | The AWS KMS master key ID used for server-side encryption. If null, AES256 encryption is used. | `string` | `null` | no |
+| enable_logging | Whether to enable access logging for the bucket | `bool` | `false` | no |
+| logging_target_bucket | The name of the bucket to store access logs | `string` | `null` | no |
+| logging_target_prefix | The prefix for access log objects | `string` | `"logs/"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
+| arn | The ARN of the bucket |
+| name | The name of the bucket |
 
 ## Development
 

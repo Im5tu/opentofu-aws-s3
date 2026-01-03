@@ -26,3 +26,27 @@ variable "enable_lifecycle_policy" {
   description = "Whether or not to enable lifecycle on bucket contents"
   default     = true
 }
+
+variable "kms_master_key_id" {
+  type        = string
+  description = "The AWS KMS master key ID used for server-side encryption. If null, AES256 encryption is used."
+  default     = null
+}
+
+variable "enable_logging" {
+  type        = bool
+  description = "Whether to enable access logging for the bucket"
+  default     = false
+}
+
+variable "logging_target_bucket" {
+  type        = string
+  description = "The name of the bucket to store access logs"
+  default     = null
+}
+
+variable "logging_target_prefix" {
+  type        = string
+  description = "The prefix for access log objects"
+  default     = "logs/"
+}
