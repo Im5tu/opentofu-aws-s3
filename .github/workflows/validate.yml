@@ -31,6 +31,7 @@ jobs:
           framework: terraform
           quiet: true
           soft_fail: false
+          config_file: .checkov.yaml
 
       - name: Trivy Security Scan
         uses: aquasecurity/trivy-action@0.33.1
