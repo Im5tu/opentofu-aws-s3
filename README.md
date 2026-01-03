@@ -8,7 +8,7 @@ A module for creating S3 buckets with server-side encryption, optional logging, 
 
 ```hcl
 module "bucket" {
-  source = "git::https://github.com/im5tu/opentofu-aws-s3.git?ref=main"
+  source = "git::https://github.com/im5tu/opentofu-aws-s3.git?ref=f0401b77f5fe7c0fe09757001f7f6045f1296093"
 
   name = "my-application-bucket"
 }
@@ -18,7 +18,7 @@ module "bucket" {
 
 ```hcl
 module "bucket" {
-  source = "git::https://github.com/im5tu/opentofu-aws-s3.git?ref=main"
+  source = "git::https://github.com/im5tu/opentofu-aws-s3.git?ref=f0401b77f5fe7c0fe09757001f7f6045f1296093"
 
   name              = "my-encrypted-bucket"
   kms_master_key_id = aws_kms_key.bucket_key.arn
@@ -30,7 +30,7 @@ module "bucket" {
 
 ```hcl
 module "bucket" {
-  source = "git::https://github.com/im5tu/opentofu-aws-s3.git?ref=main"
+  source = "git::https://github.com/im5tu/opentofu-aws-s3.git?ref=f0401b77f5fe7c0fe09757001f7f6045f1296093"
 
   name                  = "my-logged-bucket"
   enable_logging        = true
